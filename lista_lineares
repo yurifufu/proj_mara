@@ -10,12 +10,14 @@ class Playlist:
     
     def adicionar_musica(self, nome, cantor):
         nova_musica = Musica(nome, cantor)
-        if self.inicio is None:
+        if self.inicio is None or self.inicio.nome > nova_musica.nome:
+            nova_musica.proximo = self.inicio
             self.inicio = nova_musica
         else:
             atual = self.inicio
-            while atual.proximo is not None:
+            while atual.proximo is not None and atual.proximo.nome < nova_musica.nome:
                 atual = atual.proximo
+            nova_musica.proximo = atual.proximo
             atual.proximo = nova_musica
     
     def exibir_playlist(self):
@@ -33,13 +35,14 @@ class Playlist:
         print("Playlist fechada.")
     
     def menu_playlist(self):
-        print("Menu: 1. Adicionar música 2. Exibir playlist 3. Fechar programa")
+        print("Escolha uma das opções: 1. Adicionar música 2. Exibir playlist 3. Fechar programa")
                 
 def main():
+    print("Olá, usuário! Bem-vindo ao nosso sistema de playlist.")
     playlist = Playlist()
     while True:
         playlist.menu_playlist()
-        escolha = input("Escolha uma opção: ")
+        escolha = input("")
 
         if escolha == "1":
             nome = input("Digite uma música para ser adicionada à playlist: ")
